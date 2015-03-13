@@ -533,7 +533,6 @@ public class RedisSessionManager extends ManagerBase implements Lifecycle {
 
       session.setId(id);
       session.setNew(false);
-      session.setMaxInactiveInterval(getMaxInactiveInterval());
       session.access();
       session.setValid(true);
       session.resetDirtyTracking();
@@ -621,8 +620,8 @@ public class RedisSessionManager extends ManagerBase implements Lifecycle {
         log.trace("Save was determined to be unnecessary");
       }
 
-      log.trace("Setting expire timeout on session [" + redisSession.getId() + "] to " + getMaxInactiveInterval());
-      jedis.expire(binaryId, getMaxInactiveInterval());
+      log.trace("Setting expire timeout on session [" + redisSession.getId() + "] to " + session.getMaxInactiveInterval());
+      jedis.expire(binaryId, session.getMaxInactiveInterval());
 
       error = false;
 
